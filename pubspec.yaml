@@ -1,0 +1,16 @@
+name: simple_circles
+description: A Flutter package for drawing simple circles.
+version: 0.0.1
+author: kaboc
+homepage: https://github.com/kaboc/flutter_simple_circles
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
