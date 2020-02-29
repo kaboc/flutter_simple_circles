@@ -92,6 +92,7 @@ class _Painter extends CustomPainter {
         end = style.end,
         degree = style.degree == null ? null : Degree(style.degree),
         strokeWidth = style.strokeWidth,
+        endStrokeWidth = style.endStrokeWidth,
         length = style.length,
         step = style.step,
         round = style.round;
@@ -106,6 +107,7 @@ class _Painter extends CustomPainter {
   final double end;
   final Degree degree;
   final double strokeWidth;
+  final double endStrokeWidth;
   final double length;
   final double step;
   final RoundCap round;
@@ -311,10 +313,21 @@ class _Painter extends CustomPainter {
   void _drawDots(Canvas canvas) {
     final Offset center = Offset(width / 2, height / 2);
 
+    double b = begin;
+    double e = end;
+    if (begin > end) {
+      b = end;
+      e = begin;
+    }
+
     final Path path = Path();
-    for (double d = begin; d < end; d += step) {
+    for (double d = b; d < e; d += step) {
       final Offset offset = Degree(d).offsetOnArc(width, height, center);
-      path.addOval(Rect.fromCircle(center: offset, radius: strokeWidth));
+      path.addOval(Rect.fromCircle(
+        center: offset,
+        radius: strokeWidth +
+            (endStrokeWidth - strokeWidth) * (d - begin) / (end - begin),
+      ));
     }
     canvas.drawPath(path, _circlePaint);
   }
@@ -408,11 +421,22 @@ class _Painter extends CustomPainter {
   void _drawDottedLine(Canvas canvas) {
     final Offset center = Offset(width / 2, height / 2);
 
+    double b = begin;
+    double e = end;
+    if (begin > end) {
+      b = end;
+      e = begin;
+    }
+
     final Path path = Path();
-    for (double i = begin; i < end; i += step) {
+    for (double i = b; i < e; i += step) {
       final Offset offset =
           degree.offsetOnArc(width * i / 100, height * i / 100, center);
-      path.addOval(Rect.fromCircle(center: offset, radius: strokeWidth));
+      path.addOval(Rect.fromCircle(
+        center: offset,
+        radius: strokeWidth +
+            (endStrokeWidth - strokeWidth) * (i - begin) / (end - begin),
+      ));
     }
     canvas.drawPath(path, _circlePaint);
   }

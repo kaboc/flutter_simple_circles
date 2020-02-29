@@ -11,13 +11,17 @@ class CircleStyle {
     this.strokeWidth,
     this.length,
     this.step,
+    double endStrokeWidth,
     RoundCap round,
   })  : assert(type != null),
         assert(begin != null),
         assert(end != null),
-        assert(strokeWidth == null || strokeWidth > 0.0),
+        assert((strokeWidth == null && endStrokeWidth == null) ||
+            strokeWidth > 0.0),
+        assert(endStrokeWidth == null || endStrokeWidth > 0.0),
         assert(length == null || length > 0.0),
         assert(step == null || step > 0.0),
+        endStrokeWidth = endStrokeWidth ?? strokeWidth,
         round = round ?? RoundCap.none,
         degree = null;
 
@@ -29,14 +33,18 @@ class CircleStyle {
     this.strokeWidth,
     this.length,
     this.step,
+    double endStrokeWidth,
     RoundCap round,
   })  : assert(type != null),
         assert(degree != null),
         assert(begin != null),
         assert(end != null),
-        assert(strokeWidth == null || strokeWidth > 0.0),
+        assert((strokeWidth == null && endStrokeWidth == null) ||
+            strokeWidth > 0.0),
+        assert(endStrokeWidth == null || endStrokeWidth > 0.0),
         assert(length == null || length > 0.0),
         assert(step == null || step > 0.0),
+        endStrokeWidth = endStrokeWidth ?? strokeWidth,
         round = round ?? RoundCap.none;
 
   const CircleStyle.stroke({
@@ -80,12 +88,14 @@ class CircleStyle {
     double begin = 0.0,
     double end = 360.0,
     double strokeWidth = 1.0,
+    double endStrokeWidth,
     double step = 10.0,
   }) : this._(
           type: CircleStyleType.dotted,
           begin: begin,
           end: end,
           strokeWidth: strokeWidth,
+          endStrokeWidth: endStrokeWidth ?? strokeWidth,
           step: step,
         );
 
@@ -126,6 +136,7 @@ class CircleStyle {
     double begin = -100.0,
     double end = 100.0,
     double strokeWidth = 1.0,
+    double endStrokeWidth,
     double step = 10.0,
   }) : this._line(
           type: CircleStyleType.dottedLine,
@@ -133,6 +144,7 @@ class CircleStyle {
           begin: begin,
           end: end,
           strokeWidth: strokeWidth,
+          endStrokeWidth: endStrokeWidth ?? strokeWidth,
           step: step,
         );
 
@@ -142,6 +154,7 @@ class CircleStyle {
   final double degree;
   final double length;
   final double strokeWidth;
+  final double endStrokeWidth;
   final double step;
   final RoundCap round;
 }

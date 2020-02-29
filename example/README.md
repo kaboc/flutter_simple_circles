@@ -56,6 +56,7 @@ Just run the files below that you can find in the [lib](lib) directory.
 
 - [main_pie.dart](lib/main_pie.dart)
 - [main_gradients.dart](lib/main_gradients.dart)
+- [main_loading.dart](lib/main_loading.dart)
 - [main_clock.dart](lib/main_clock.dart)
 - [main_percentage.dart](lib/main_pie.dart)
 - [main_oval_text.dart](lib/main_oval_text.dart)
