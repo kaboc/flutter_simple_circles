@@ -46,8 +46,8 @@ class Circle extends StatelessWidget {
     if (w == null || h == null) {
       final CircleStack stack = CircleStack.of(context);
       if (stack != null) {
-        w ??= stack.width - stack.padding.horizontal;
-        h ??= stack.height - stack.padding.vertical;
+        w ??= stack.width;
+        h ??= stack.height;
       }
     }
 

@@ -5,10 +5,10 @@
 [lib/main_smiley.dart](lib/main_smiley.dart)
 
 ```dart
-const CircleStack(
+CircleStack(
   width: 270.0,
   height: 270.0,
-  children: <Widget>[
+  children: const <Widget>[
     // Outline
     Circle(
       colors: [Colors.yellow, Colors.deepOrange],

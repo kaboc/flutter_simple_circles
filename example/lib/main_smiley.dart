@@ -11,14 +11,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     const radius = 270.0;
 
-    return const MaterialApp(
+    return MaterialApp(
       home: Scaffold(
         body: SafeArea(
           child: Center(
             child: CircleStack(
               width: radius,
               height: radius,
-              children: <Widget>[
+              children: const <Widget>[
                 // Outline
                 Circle(
                   colors: [Colors.yellow, Colors.deepOrange],
