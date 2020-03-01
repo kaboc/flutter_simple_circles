@@ -9,45 +9,37 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       home: Scaffold(
         body: SafeArea(
           child: Center(
-            child: _CircularText(),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const <Widget>[
+                Text(
+                  'Letters are angled along the lines\nfrom the oval center.',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 24.0),
+                _Oval(
+                  description: 'rotate: degree',
+                ),
+                SizedBox(height: 64.0),
+                Text(
+                  'Letters are angled vertically to\nthe oval arc.',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 24.0),
+                _Oval(
+                  description: 'rotate: Degree(degree)\n'
+                      '.forOvalArc(w, h).value',
+                  verticalToArc: true,
+                ),
+              ],
+            ),
           ),
         ),
       ),
-    );
-  }
-}
-
-class _CircularText extends StatelessWidget {
-  const _CircularText();
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: const <Widget>[
-        Text(
-          'Letters are angled along the lines\nfrom the oval center.',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        SizedBox(height: 24.0),
-        _Oval(
-          description: 'rotate: degree',
-        ),
-        SizedBox(height: 64.0),
-        Text(
-          'Letters are angled vertically to\nthe oval arc.',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        SizedBox(height: 24.0),
-        _Oval(
-          description: 'rotate: Degree(degree)\n.forOvalArc(w, h).value',
-          verticalToArc: true,
-        ),
-      ],
     );
   }
 }

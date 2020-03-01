@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
                 // Outline
                 Circle(
                   colors: [Colors.yellow, Colors.deepOrange],
-                  style: CircleStyle.fill(),/**/
+                  style: CircleStyle.fill(),
                   shader: CircleShader.linearGradientFrom(-45.0),
                 ),
                 // Left eye

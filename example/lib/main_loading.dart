@@ -54,8 +54,9 @@ class _IndicatorState extends State<_Indicator> {
 
     return ValueListenableBuilder<int>(
       valueListenable: count,
-      builder: (_, c, greyCircle) {
+      builder: (_, c, __) {
         final deg = c * step % 360;
+
         return Circle(
           width: 200.0,
           height: 200.0,
