@@ -12,14 +12,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: SafeArea(
-        child: Scaffold(
-          body: Center(
-            child: SizedBox(
-              width: 200.0,
-              height: 200.0,
-              child: _Indicator(),
-            ),
+      home: Scaffold(
+        body: SafeArea(
+          child: Center(
+            child: _Indicator(),
           ),
         ),
       ),
@@ -61,6 +57,8 @@ class _IndicatorState extends State<_Indicator> {
       builder: (_, c, greyCircle) {
         final deg = c * step % 360;
         return Circle(
+          width: 200.0,
+          height: 200.0,
           colors: const <Color>[Color(0xCCE53935), Color(0x77E53935)],
           shader: CircleShader.linearGradientFrom(deg),
           style: CircleStyle.dotted(

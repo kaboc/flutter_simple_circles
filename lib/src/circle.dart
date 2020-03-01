@@ -62,9 +62,8 @@ class Circle extends StatelessWidget {
 
   Widget _paint(double width, double height) {
     return CustomPaint(
+      size: Size(width, height),
       painter: _Painter(
-        width: width,
-        height: height,
         colors: colors == null || colors.isEmpty
             ? const <Color>[Color(0xFF000000)]
             : colors,
@@ -78,8 +77,6 @@ class Circle extends StatelessWidget {
 
 class _Painter extends CustomPainter {
   _Painter({
-    @required this.width,
-    @required this.height,
     @required this.colors,
     @required this.shader,
     @required MaskFilter maskFilter,
@@ -98,8 +95,6 @@ class _Painter extends CustomPainter {
         round = style.round;
 
   final Paint _circlePaint;
-  final double width;
-  final double height;
   final List<Color> colors;
   final Shader shader;
   final CircleStyleType type;
@@ -124,7 +119,7 @@ class _Painter extends CustomPainter {
     }
 
     if (shader is CircleShader) {
-      _setShader(shader as CircleShader);
+      _setShader(size.width, size.height, shader as CircleShader);
     } else {
       _circlePaint.shader = shader;
     }
@@ -132,28 +127,28 @@ class _Painter extends CustomPainter {
     switch (type) {
       case CircleStyleType.stroke:
         round == RoundCap.none
-            ? _drawArc(canvas, begin, end)
-            : _drawArcWithRoundEnds(canvas);
+            ? _drawArc(canvas, size.width, size.height, begin, end)
+            : _drawArcWithRoundEnds(canvas, size.width, size.height);
         break;
       case CircleStyleType.fill:
-        _drawArc(canvas, begin, end);
+        _drawArc(canvas, size.width, size.height, begin, end);
         break;
       case CircleStyleType.dashed:
-        _drawDash(canvas);
+        _drawDash(canvas, size.width, size.height);
         break;
       case CircleStyleType.dotted:
-        _drawDots(canvas);
+        _drawDots(canvas, size.width, size.height);
         break;
       case CircleStyleType.line:
         round == RoundCap.none
-            ? _drawLine(canvas, begin, end)
-            : _drawLineWithRoundEnds(canvas);
+            ? _drawLine(canvas, size.width, size.height, begin, end)
+            : _drawLineWithRoundEnds(canvas, size.width, size.height);
         break;
       case CircleStyleType.dashedLine:
-        _drawDashedLine(canvas);
+        _drawDashedLine(canvas, size.width, size.height);
         break;
       case CircleStyleType.dottedLine:
-        _drawDottedLine(canvas);
+        _drawDottedLine(canvas, size.width, size.height);
         break;
     }
   }
@@ -163,7 +158,13 @@ class _Painter extends CustomPainter {
     return true;
   }
 
-  void _drawArc(Canvas canvas, double begin, double end) {
+  void _drawArc(
+    Canvas canvas,
+    double width,
+    double height,
+    double begin,
+    double end,
+  ) {
     canvas.drawArc(
       Rect.fromLTWH(0, 0, width, height),
       Degree(begin).adjustedRadian(),
@@ -173,9 +174,9 @@ class _Painter extends CustomPainter {
     );
   }
 
-  void _drawArcWithRoundEnds(Canvas canvas) {
+  void _drawArcWithRoundEnds(Canvas canvas, double width, double height) {
     if (strokeWidth <= 1.0) {
-      _drawArc(canvas, begin, end);
+      _drawArc(canvas, width, height, begin, end);
       return;
     }
 
@@ -296,7 +297,7 @@ class _Painter extends CustomPainter {
     canvas.drawPath(path, _circlePaint);
   }
 
-  void _drawDash(Canvas canvas) {
+  void _drawDash(Canvas canvas, double width, double height) {
     final Offset center = Offset(width / 2, height / 2);
 
     final Path path = Path();
@@ -310,7 +311,7 @@ class _Painter extends CustomPainter {
     canvas.drawPath(path, _circlePaint);
   }
 
-  void _drawDots(Canvas canvas) {
+  void _drawDots(Canvas canvas, double width, double height) {
     final Offset center = Offset(width / 2, height / 2);
 
     double b = begin;
@@ -332,7 +333,13 @@ class _Painter extends CustomPainter {
     canvas.drawPath(path, _circlePaint);
   }
 
-  void _drawLine(Canvas canvas, double begin, double end) {
+  void _drawLine(
+    Canvas canvas,
+    double width,
+    double height,
+    double begin,
+    double end,
+  ) {
     final Offset center = Offset(width / 2, height / 2);
 
     canvas.drawLine(
@@ -342,7 +349,7 @@ class _Painter extends CustomPainter {
     );
   }
 
-  void _drawLineWithRoundEnds(Canvas canvas) {
+  void _drawLineWithRoundEnds(Canvas canvas, double width, double height) {
     final double distance = degree.distance(width, height);
     final double capInset = strokeWidth / 2 / distance * 100;
 
@@ -403,7 +410,7 @@ class _Painter extends CustomPainter {
     canvas.drawPath(path, _circlePaint);
   }
 
-  void _drawDashedLine(Canvas canvas) {
+  void _drawDashedLine(Canvas canvas, double width, double height) {
     final Offset center = Offset(width / 2, height / 2);
 
     final Path path = Path();
@@ -418,7 +425,7 @@ class _Painter extends CustomPainter {
     canvas.drawPath(path, _circlePaint);
   }
 
-  void _drawDottedLine(Canvas canvas) {
+  void _drawDottedLine(Canvas canvas, double width, double height) {
     final Offset center = Offset(width / 2, height / 2);
 
     double b = begin;
@@ -441,7 +448,7 @@ class _Painter extends CustomPainter {
     canvas.drawPath(path, _circlePaint);
   }
 
-  void _setShader(CircleShader shader) {
+  void _setShader(double width, double height, CircleShader shader) {
     if (shader._type != CircleShaderType.customGradient && colors.length == 1) {
       _circlePaint.color = colors.first;
       return;
