@@ -189,112 +189,50 @@ class _Painter extends CustomPainter {
     double b = bRounded ? begin + (isClockwise ? capInset : -capInset) : begin;
     double e = eRounded ? end - (isClockwise ? capInset : -capInset) : end;
 
-    final Offset center = Offset(width / 2, height / 2);
-    final double innerWidth = width - strokeWidth;
-    final double innerHeight = height - strokeWidth;
-    final double outerWidth = width + strokeWidth;
-    final double outerHeight = height + strokeWidth;
-    final double capRadius = strokeWidth / 2;
-
-    final Degree Function(Degree, Offset, bool, bool) getEdgeDegree =
-        (Degree d, Offset o, bool isOuter, bool isEnd) {
-      Degree deg = isOuter
-          ? Degree.fromOffsets(
-              center,
-              d
-                  .forOvalArc(width, height)
-                  .offsetOnArc(strokeWidth, strokeWidth, o),
-            )
-          : Degree.fromOffsets(
-              center,
-              (d + 180)
-                  .forOvalArc(width, height)
-                  .offsetOnArc(strokeWidth, strokeWidth, o),
-            );
-
-      if ((deg.value - d.value).abs() > 90.0) {
-        deg += d < 0 ? -360.0 : 360.0;
-      }
-
-      return (isClockwise && isEnd) || (!isClockwise && !isEnd)
-          ? Degree(min(d.value, deg.value))
-          : Degree(max(d.value, deg.value));
-    };
-
-    Offset bOffset = Degree(b).offsetOnArc(width, height, center);
-    Offset eOffset = Degree(e).offsetOnArc(width, height, center);
-
-    Degree bInnerDegree = getEdgeDegree(Degree(b), bOffset, false, false);
-    Degree bOuterDegree = getEdgeDegree(Degree(b), bOffset, true, false);
-    Degree eInnerDegree = getEdgeDegree(Degree(e), eOffset, false, true);
-    Degree eOuterDegree = getEdgeDegree(Degree(e), eOffset, true, true);
-
-    if ((isClockwise && bInnerDegree > eInnerDegree) ||
-        (!isClockwise && bInnerDegree < eInnerDegree)) {
+    if ((isClockwise && b > e) || (!isClockwise && b < e)) {
       if (bRounded && eRounded) {
         bRounded = false;
         b = begin;
-
-        bOffset = Degree(b).offsetOnArc(width, height, center);
-        bInnerDegree = getEdgeDegree(Degree(b), bOffset, false, false);
-        bOuterDegree = getEdgeDegree(Degree(b), bOffset, true, false);
       }
 
       if ((isClockwise && b > e) || (!isClockwise && b < e)) {
         e = b;
-        eOffset = Degree(b).offsetOnArc(width, height, center);
-        eInnerDegree = bInnerDegree;
-        eOuterDegree = bOuterDegree;
       }
     }
 
+    final Offset center = Offset(width / 2, height / 2);
+    final Rect rect = Rect.fromLTWH(0.0, 0.0, width, height);
+
     final Path path = Path();
 
-    if (bRounded) {
-      final double beginRad = Degree(b).radian();
-      final double beginRadOnArc = Degree(b).forOvalArc(width, height).radian();
-      final double beginCapRadius = cos(beginRad - beginRadOnArc) * capRadius;
-
-      path.arcTo(
-        Rect.fromCircle(center: bOffset, radius: beginCapRadius),
-        Degree(b + 180.0).forOvalArc(width, height).adjustedRadian(),
-        const Degree(180.0).radian() * (isClockwise ? 1.0 : -1.0),
-        false,
-      );
+    if (bRounded && eRounded) {
+      final Offset bOffset = Degree(b).offsetOnArc(width, height, center);
+      path
+        ..moveTo(bOffset.dx, bOffset.dy)
+        ..arcTo(rect, Degree(b).adjustedRadian(), Degree(e - b).radian(), true);
+    } else if (bRounded) {
+      final double eAdj = e - (isClockwise ? 0.1 : -0.1);
+      final Offset eAdjOffset = Degree(eAdj).offsetOnArc(width, height, center);
+      b = b == e ? eAdj : b;
+      path
+        ..moveTo(eAdjOffset.dx, eAdjOffset.dy)
+        ..arcTo(rect, Degree(eAdj).adjustedRadian(), Degree(e - eAdj).radian(),
+            true)
+        ..arcTo(
+            rect, Degree(e).adjustedRadian(), Degree(b - e).radian(), false);
+    } else {
+      final double bAdj = b + (isClockwise ? 0.1 : -0.1);
+      final Offset bAdjOffset = Degree(bAdj).offsetOnArc(width, height, center);
+      e = b == e ? bAdj : e;
+      path
+        ..moveTo(bAdjOffset.dx, bAdjOffset.dy)
+        ..arcTo(rect, Degree(bAdj).adjustedRadian(), Degree(b - bAdj).radian(),
+            true)
+        ..arcTo(
+            rect, Degree(b).adjustedRadian(), Degree(e - b).radian(), false);
     }
 
-    path.arcTo(
-      Rect.fromLTWH(-capRadius, -capRadius, outerWidth, outerHeight),
-      bOuterDegree.adjustedRadian(),
-      (eOuterDegree - bOuterDegree).radian(),
-      false,
-    );
-
-    if (eRounded) {
-      final double endRad = Degree(e).radian();
-      final double endRadOnArc = Degree(e).forOvalArc(width, height).radian();
-      final double endCapRadius = cos(endRad - endRadOnArc) * capRadius;
-
-      path.arcTo(
-        Rect.fromCircle(center: eOffset, radius: endCapRadius),
-        Degree(e).forOvalArc(width, height).adjustedRadian(),
-        const Degree(180.0).radian() * (isClockwise ? 1.0 : -1.0),
-        false,
-      );
-    }
-
-    if ((isClockwise && bInnerDegree < eInnerDegree) ||
-        (!isClockwise && bInnerDegree > eInnerDegree)) {
-      path.arcTo(
-        Rect.fromLTWH(capRadius, capRadius, innerWidth, innerHeight),
-        eInnerDegree.adjustedRadian(),
-        (bInnerDegree - eInnerDegree).radian(),
-        false,
-      );
-    }
-
-    _circlePaint.style = PaintingStyle.fill;
-    canvas.drawPath(path, _circlePaint);
+    canvas.drawPath(path, _circlePaint..strokeCap = StrokeCap.round);
   }
 
   void _drawDash(Canvas canvas, double width, double height) {
@@ -372,42 +310,39 @@ class _Painter extends CustomPainter {
     }
 
     final Offset center = Offset(width / 2, height / 2);
-    final Offset bOffset = degree.offsetAtDistance(width, height, b, center) +
-        (degree + 90.0).offsetOnArc(strokeWidth, strokeWidth);
-
-    final Offset offset1 = (degree - 90.0)
-        .forOvalArc(width, height)
-        .offsetOnArc(strokeWidth * 2, strokeWidth * 2);
-
-    final Offset offset2 = degree.offsetAtDistance(width, height, e - b);
+    Offset bOffset = degree.offsetAtDistance(width, height, b, center);
+    Offset eOffset = degree.offsetAtDistance(width, height, e, center);
 
     final Path path = Path();
-    path.moveTo(bOffset.dx, bOffset.dy);
 
-    if (bRounded) {
-      path.relativeArcToPoint(
-        offset1,
-        radius: Radius.circular(strokeWidth / 2),
-        clockwise: isOutward,
-      );
+    if (bRounded && eRounded) {
+      path
+        ..moveTo(bOffset.dx, bOffset.dy)
+        ..lineTo(eOffset.dx, eOffset.dy);
     } else {
-      path.relativeLineTo(offset1.dx, offset1.dy);
+      final double distance = degree.distance(width, height);
+      final double adjDistance = (isOutward ? 2 : -2) / distance;
+
+      if (bRounded) {
+        final Offset eAdjOffset =
+            degree.offsetAtDistance(width, height, e - adjDistance, center);
+        bOffset = b == e ? eAdjOffset : bOffset;
+        path
+          ..moveTo(eAdjOffset.dx, eAdjOffset.dy)
+          ..lineTo(eOffset.dx, eOffset.dy)
+          ..lineTo(bOffset.dx, bOffset.dy);
+      } else {
+        final Offset bAdjOffset =
+            degree.offsetAtDistance(width, height, b + adjDistance, center);
+        eOffset = b == e ? bAdjOffset : eOffset;
+        path
+          ..moveTo(bAdjOffset.dx, bAdjOffset.dy)
+          ..lineTo(bOffset.dx, bOffset.dy)
+          ..lineTo(eOffset.dx, eOffset.dy);
+      }
     }
 
-    path.relativeLineTo(offset2.dx, offset2.dy);
-
-    if (eRounded) {
-      path.relativeArcToPoint(
-        -offset1,
-        radius: Radius.circular(strokeWidth / 2),
-        clockwise: isOutward,
-      );
-    } else {
-      path.relativeLineTo(-offset1.dx, -offset1.dy);
-    }
-
-    _circlePaint.style = PaintingStyle.fill;
-    canvas.drawPath(path, _circlePaint);
+    canvas.drawPath(path, _circlePaint..strokeCap = StrokeCap.round);
   }
 
   void _drawDashedLine(Canvas canvas, double width, double height) {
