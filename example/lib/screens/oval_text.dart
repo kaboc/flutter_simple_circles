@@ -2,17 +2,19 @@ import 'package:flutter/material.dart';
 
 import 'package:simple_circles/simple_circles.dart';
 
-void main() => runApp(const MyApp());
-
-class MyApp extends StatelessWidget {
-  const MyApp();
+class OvalTextScreen extends StatelessWidget {
+  const OvalTextScreen();
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: SafeArea(
-          child: Center(
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Oval text'),
+      ),
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(32.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: const <Widget>[
@@ -20,16 +22,16 @@ class MyApp extends StatelessWidget {
                   'Letters are angled along the lines\nfrom the oval center.',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 24.0),
+                SizedBox(height: 18.0),
                 _Oval(
                   description: 'rotate: degree',
                 ),
-                SizedBox(height: 64.0),
+                SizedBox(height: 50.0),
                 Text(
                   'Letters are angled vertically to\nthe oval arc.',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 24.0),
+                SizedBox(height: 18.0),
                 _Oval(
                   description: 'rotate: Degree(degree)\n'
                       '.forOvalArc(w, h).value',

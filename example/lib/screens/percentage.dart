@@ -3,35 +3,37 @@ import 'package:flutter/material.dart';
 
 import 'package:simple_circles/simple_circles.dart';
 
-void main() => runApp(const MyApp());
-
-class MyApp extends StatelessWidget {
-  const MyApp();
+class PercentageScreen extends StatelessWidget {
+  const PercentageScreen();
 
   @override
   Widget build(BuildContext context) {
     final _percentage = ValueNotifier<double>(0.0);
 
-    return MaterialApp(
-      home: Scaffold(
-        body: SafeArea(
-          child: Center(
-            child: _Indicator(_percentage),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Loading indicator'),
+      ),
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(32.0),
+            child: _PercentageIndicator(_percentage),
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.refresh),
-          onPressed: () {
-            _percentage.value = _percentage.value == 0.0 ? 100.0 : 0.0;
-          },
-        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.refresh),
+        onPressed: () {
+          _percentage.value = _percentage.value == 0.0 ? 100.0 : 0.0;
+        },
       ),
     );
   }
 }
 
-class _Indicator extends StatelessWidget {
-  const _Indicator(this._percentage);
+class _PercentageIndicator extends StatelessWidget {
+  const _PercentageIndicator(this._percentage);
 
   final ValueNotifier<double> _percentage;
 
@@ -59,7 +61,7 @@ class _Indicator extends StatelessWidget {
                   shader: kIsWeb ? null : const CircleShader.sweepGradient(),
                   style: CircleStyle.stroke(
                     end: percentage * 360.0 / 100,
-                    strokeWidth: radius / 5.5,
+                    strokeWidth: radius / 6,
                     // RoundCap on only one end looks different on web due to
                     // different implementations between platforms in Flutter.
                     // RoundCap.none is used for web here to avoid the ugly look.
@@ -84,7 +86,7 @@ class _Indicator extends StatelessWidget {
       },
       child: const Circle(
         colors: [Color(0xFFCFD8DC)],
-        style: CircleStyle.stroke(strokeWidth: radius / 5.5),
+        style: CircleStyle.stroke(strokeWidth: radius / 6),
       ),
     );
   }

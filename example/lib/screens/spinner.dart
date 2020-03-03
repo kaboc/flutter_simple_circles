@@ -5,18 +5,20 @@ import 'package:flutter/material.dart';
 
 import 'package:simple_circles/simple_circles.dart';
 
-void main() => runApp(const MyApp());
-
-class MyApp extends StatelessWidget {
-  const MyApp();
+class SpinnerScreen extends StatelessWidget {
+  const SpinnerScreen();
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: SafeArea(
-          child: Center(
-            child: _Indicator(),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Loading indicator'),
+      ),
+      body: const SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            padding: EdgeInsets.all(32.0),
+            child: _Spinner(),
           ),
         ),
       ),
@@ -24,14 +26,14 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class _Indicator extends StatefulWidget {
-  const _Indicator();
+class _Spinner extends StatefulWidget {
+  const _Spinner();
 
   @override
-  _IndicatorState createState() => _IndicatorState();
+  _SpinnerState createState() => _SpinnerState();
 }
 
-class _IndicatorState extends State<_Indicator> {
+class _SpinnerState extends State<_Spinner> {
   final ValueNotifier<int> count = ValueNotifier<int>(0);
   Timer timer;
 
@@ -66,8 +68,8 @@ class _IndicatorState extends State<_Indicator> {
           // due to current insufficient web implementation of Flutter
           // and it looks bad.
           colors: kIsWeb
-              ? const [Color(0xCCE53935)]
-              : const [Color(0xCCE53935), Color(0x77E53935)],
+              ? const [Color(0xFF039BE5)]
+              : const [Color(0xFF039BE5), Color(0x77039BE5)],
           shader: CircleShader.linearGradientFrom(deg),
           style: CircleStyle.dotted(
             begin: deg - 180.0,

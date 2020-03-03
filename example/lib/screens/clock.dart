@@ -6,24 +6,28 @@ import 'package:flutter/material.dart' hide Image;
 
 import 'package:simple_circles/simple_circles.dart';
 
-void main() => runApp(const MyApp());
-
-class MyApp extends StatelessWidget {
-  const MyApp();
+class ClockScreen extends StatelessWidget {
+  const ClockScreen();
 
   static const _imagePath = 'assets/clock_texture.jpg';
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: SafeArea(
-          child: Center(
-            child: FutureBuilder<ImageShader>(
-              future: _getImageShader(),
-              initialData: null,
-              builder: (context, snapshot) => _Clock(snapshot.data),
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Clock'),
+      ),
+      body: SafeArea(
+        child: Center(
+          child: FutureBuilder<ImageShader>(
+            future: _getImageShader(),
+            initialData: null,
+            builder: (context, snapshot) {
+              return SingleChildScrollView(
+                padding: const EdgeInsets.all(32.0),
+                child: _Clock(snapshot.data),
+              );
+            },
           ),
         ),
       ),
@@ -61,7 +65,7 @@ class _Clock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const radius = 300.0;
+    const radius = 270.0;
     const bgColor = Color(0xFFFAF5EA);
     const rimColor = Color(0xFF332222);
     const textColor = Color(0xFF333333);
@@ -112,7 +116,7 @@ class _Clock extends StatelessWidget {
             align: Alignment.center,
             child: Text(
               i.toString(),
-              style: const TextStyle(fontSize: 32.0, color: textColor),
+              style: const TextStyle(fontSize: 27.0, color: textColor),
             ),
           ),
         // Hour hand
