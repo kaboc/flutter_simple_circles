@@ -167,7 +167,7 @@ class _Painter extends CustomPainter {
   ) {
     canvas.drawArc(
       Rect.fromLTWH(0, 0, width, height),
-      Degree(begin).adjustedRadian(),
+      Degree(begin).tiltedRadian(),
       Degree(end - begin).radian(),
       type == CircleStyleType.fill,
       _circlePaint,
@@ -209,27 +209,25 @@ class _Painter extends CustomPainter {
       final Offset bOffset = Degree(b).offsetOnArc(width, height, center);
       path
         ..moveTo(bOffset.dx, bOffset.dy)
-        ..arcTo(rect, Degree(b).adjustedRadian(), Degree(e - b).radian(), true);
+        ..arcTo(rect, Degree(b).tiltedRadian(), Degree(e - b).radian(), true);
     } else if (bRounded) {
       final double eAdj = e - (isClockwise ? 0.1 : -0.1);
       final Offset eAdjOffset = Degree(eAdj).offsetOnArc(width, height, center);
       b = b == e ? eAdj : b;
       path
         ..moveTo(eAdjOffset.dx, eAdjOffset.dy)
-        ..arcTo(rect, Degree(eAdj).adjustedRadian(), Degree(e - eAdj).radian(),
-            true)
         ..arcTo(
-            rect, Degree(e).adjustedRadian(), Degree(b - e).radian(), false);
+            rect, Degree(eAdj).tiltedRadian(), Degree(e - eAdj).radian(), true)
+        ..arcTo(rect, Degree(e).tiltedRadian(), Degree(b - e).radian(), false);
     } else {
       final double bAdj = b + (isClockwise ? 0.1 : -0.1);
       final Offset bAdjOffset = Degree(bAdj).offsetOnArc(width, height, center);
       e = b == e ? bAdj : e;
       path
         ..moveTo(bAdjOffset.dx, bAdjOffset.dy)
-        ..arcTo(rect, Degree(bAdj).adjustedRadian(), Degree(b - bAdj).radian(),
-            true)
         ..arcTo(
-            rect, Degree(b).adjustedRadian(), Degree(e - b).radian(), false);
+            rect, Degree(bAdj).tiltedRadian(), Degree(b - bAdj).radian(), true)
+        ..arcTo(rect, Degree(b).tiltedRadian(), Degree(e - b).radian(), false);
     }
 
     canvas.drawPath(path, _circlePaint..strokeCap = StrokeCap.round);

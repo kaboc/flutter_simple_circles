@@ -69,8 +69,8 @@ class _Sweep extends _Gradient {
       colors: e < b ? colors.reversed.toList() : colors,
       stops: stops,
       startAngle: 0,
-      endAngle: larger.adjustedRadian() - smaller.adjustedRadian(),
-      transform: GradientRotation(smaller.adjustedRadian()),
+      endAngle: larger.tiltedRadian() - smaller.tiltedRadian(),
+      transform: GradientRotation(smaller.tiltedRadian()),
     );
   }
 
@@ -104,7 +104,7 @@ class _Line extends _Gradient {
       begin: Alignment(begin * ratio / -100, 0.0),
       end: Alignment(end * ratio / -100, 0.0),
       transform: GradientRotation(
-        (degree + const Degree(180.0)).forOval(width, height).adjustedRadian(),
+        (degree + const Degree(180.0)).forOval(width, height).tiltedRadian(),
       ),
     );
   }
@@ -134,7 +134,7 @@ class _Linear extends _Gradient {
       stops: stops,
       begin: Alignment(ratio * -1.0, 0.0),
       end: Alignment(ratio, 0.0),
-      transform: GradientRotation(degree.adjustedRadian()),
+      transform: GradientRotation(degree.tiltedRadian()),
     );
   }
 

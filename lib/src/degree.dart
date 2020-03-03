@@ -6,6 +6,16 @@ class Degree {
 
   final double value;
 
+  @override
+  String toString() => value.toString();
+
+  @override
+  bool operator ==(Object other) =>
+      identical(other, this) || (other is Degree && value == other.value);
+
+  @override
+  int get hashCode => runtimeType.hashCode ^ value.hashCode;
+
   Degree operator +(Object other) {
     if (other is Degree) {
       return Degree(value + other.value);
@@ -50,18 +60,11 @@ class Degree {
       (other is Degree && value < other.value) ||
       (other is num && value < other);
 
-  @override
-  bool operator ==(Object other) =>
-      identical(other, this) || (other is Degree && value == other.value);
-
-  @override
-  int get hashCode => runtimeType.hashCode ^ value.hashCode;
-
   double radian() {
     return value * pi / 180.0;
   }
 
-  double adjustedRadian() {
+  double tiltedRadian() {
     return value * pi / 180.0 - pi / 2;
   }
 
@@ -70,7 +73,7 @@ class Degree {
     double height, [
     Offset center = const Offset(0.0, 0.0),
   ]) {
-    final double rad = adjustedRadian();
+    final double rad = tiltedRadian();
     return Offset(
       center.dx + width / 2 * cos(rad),
       center.dy + height / 2 * sin(rad),
