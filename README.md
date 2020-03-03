@@ -7,7 +7,7 @@ A Flutter package for drawing simple circles.
 - [x] Examples
 - [x] Some additional features
 - [x] Improvement of round caps
-- [ ] Some changes for web
+- [x] Some changes for web
 - [ ] Test code
 - [ ] Documentation (comments in code)
 - [ ] README

@@ -262,11 +262,13 @@ class _Painter extends CustomPainter {
     final Path path = Path();
     for (double d = b; d < e; d += step) {
       final Offset offset = Degree(d).offsetOnArc(width, height, center);
-      path.addOval(Rect.fromCircle(
-        center: offset,
-        radius: strokeWidth +
-            (endStrokeWidth - strokeWidth) * (d - begin) / (end - begin),
-      ));
+      path
+        ..moveTo(offset.dx, offset.dy)
+        ..addOval(Rect.fromCircle(
+          center: offset,
+          radius: strokeWidth +
+              (endStrokeWidth - strokeWidth) * (d - begin) / (end - begin),
+        ));
     }
     canvas.drawPath(path, _circlePaint);
   }
@@ -374,11 +376,13 @@ class _Painter extends CustomPainter {
     for (double i = b; i < e; i += step) {
       final Offset offset =
           degree.offsetOnArc(width * i / 100, height * i / 100, center);
-      path.addOval(Rect.fromCircle(
-        center: offset,
-        radius: strokeWidth +
-            (endStrokeWidth - strokeWidth) * (i - begin) / (end - begin),
-      ));
+      path
+        ..moveTo(offset.dx, offset.dy)
+        ..addOval(Rect.fromCircle(
+          center: offset,
+          radius: strokeWidth +
+              (endStrokeWidth - strokeWidth) * (i - begin) / (end - begin),
+        ));
     }
     canvas.drawPath(path, _circlePaint);
   }

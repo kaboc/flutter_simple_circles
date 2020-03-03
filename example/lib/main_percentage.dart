@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:simple_circles/simple_circles.dart';
@@ -52,12 +53,17 @@ class _Indicator extends StatelessWidget {
               children: <Widget>[
                 greyCircle,
                 Circle(
-                  colors: const <Color>[Color(0xFF4FC3F7), Color(0xFF1A237E)],
-                  shader: const CircleShader.sweepGradient(),
+                  colors: const [Color(0xFF4FC3F7), Color(0xFF1A237E)],
+                  // SweepGradient is yet to be implemented on web in Flutter.
+                  // Null here is regarded as CircleShader.linearGradient().
+                  shader: kIsWeb ? null : const CircleShader.sweepGradient(),
                   style: CircleStyle.stroke(
                     end: percentage * 360.0 / 100,
                     strokeWidth: radius / 5.5,
-                    round: RoundCap.end,
+                    // RoundCap on only one end looks different on web due to
+                    // different implementations between platforms in Flutter.
+                    // RoundCap.none is used for web here to avoid the ugly look.
+                    round: kIsWeb ? RoundCap.none : RoundCap.end,
                   ),
                 ),
                 CircleContainer(

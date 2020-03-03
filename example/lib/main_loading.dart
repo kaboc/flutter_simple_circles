@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:simple_circles/simple_circles.dart';
@@ -60,7 +61,13 @@ class _IndicatorState extends State<_Indicator> {
         return Circle(
           width: 200.0,
           height: 200.0,
-          colors: const <Color>[Color(0xCCE53935), Color(0x77E53935)],
+          // Only a single colour is used for web here as the angle of
+          // LinearGradient (transform: GradientRotation(...)) is ignored
+          // due to current insufficient web implementation of Flutter
+          // and it looks bad.
+          colors: kIsWeb
+              ? const [Color(0xCCE53935)]
+              : const [Color(0xCCE53935), Color(0x77E53935)],
           shader: CircleShader.linearGradientFrom(deg),
           style: CircleStyle.dotted(
             begin: deg - 180.0,

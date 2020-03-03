@@ -23,6 +23,8 @@ class MyApp extends StatelessWidget {
                 Circle(
                   colors: [Colors.yellow, Colors.deepOrange],
                   style: CircleStyle.fill(),
+                  // The angle specified here is ignored on web due to
+                  // insufficient implementation on the Flutter side.
                   shader: CircleShader.linearGradientFrom(-45.0),
                 ),
                 // Left eye
