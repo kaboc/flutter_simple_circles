@@ -12,7 +12,7 @@ class SpinnerScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Loading indicator'),
+        title: const Text('Spinner'),
       ),
       body: const SafeArea(
         child: Center(
@@ -40,7 +40,7 @@ class _SpinnerState extends State<_Spinner> {
   @override
   void initState() {
     super.initState();
-    timer = Timer.periodic(const Duration(milliseconds: 60), (t) {
+    timer = Timer.periodic(const Duration(milliseconds: 50), (t) {
       count.value = t.tick;
     });
   }

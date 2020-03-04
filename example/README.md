@@ -2,7 +2,7 @@
 
 ## Smiley face
 
-[lib/main_smiley.dart](lib/main_smiley.dart)
+[lib/main_smiley.dart](lib/screens/smiley.dart)
 
 ```dart
 CircleStack(
@@ -52,11 +52,11 @@ CircleStack(
 
 ## More examples
 
-Just run the files below that you can find in the [lib](lib) directory.
+Just run `main.dart` in the [lib](lib) directory, or see the [Demo](https://kaboc.github.io/flutter_simple_circles/), which shows the following examples in addition to the smiley face above.
 
-- [main_pie.dart](lib/main_pie.dart)
-- [main_gradients.dart](lib/main_gradients.dart)
-- [main_loading.dart](lib/main_loading.dart)
-- [main_clock.dart](lib/main_clock.dart)
-- [main_percentage.dart](lib/main_pie.dart)
-- [main_oval_text.dart](lib/main_oval_text.dart)
+- [Pie chart](lib/screens/pie_chart.dart)
+- [Clock](lib/screens/clock.dart)
+- [Gradients](lib/screens/gradients.dart)
+- [Spinner](lib/screens/spinner.dart)
+- [Percentage](lib/screens/percentage.dart)
+- [Oval text](lib/screens/oval_text.dart) 

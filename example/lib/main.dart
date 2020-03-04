@@ -16,52 +16,61 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const appTitle = 'Simple Circles';
+
     return MaterialApp(
+      title: appTitle,
       theme: ThemeData(
         primarySwatch: Colors.teal,
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Simple circles sample'),
+          title: const Text(appTitle),
         ),
         body: SafeArea(
           child: Center(
             child: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(32.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    _Button(
-                      label: 'Smiley',
-                      builder: (_) => const SmileyScreen(),
-                    ),
-                    _Button(
-                      label: 'Pie chart',
-                      builder: (_) => const PieChartScreen(),
-                    ),
-                    _Button(
-                      label: 'Clock',
-                      builder: (_) => const ClockScreen(),
-                    ),
-                    if (!kIsWeb)
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(
+                    minWidth: 250.0,
+                    maxWidth: 500.0,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
                       _Button(
-                        label: 'Gradients',
-                        builder: (_) => const GradientsScreen(),
+                        label: 'Smiley',
+                        builder: (_) => const SmileyScreen(),
                       ),
-                    _Button(
-                      label: 'Spinner',
-                      builder: (_) => const SpinnerScreen(),
-                    ),
-                    _Button(
-                      label: 'Percentage',
-                      builder: (_) => const PercentageScreen(),
-                    ),
-                    _Button(
-                      label: 'Oval text',
-                      builder: (_) => const OvalTextScreen(),
-                    ),
-                  ],
+                      _Button(
+                        label: 'Pie chart',
+                        builder: (_) => const PieChartScreen(),
+                      ),
+                      _Button(
+                        label: 'Clock',
+                        builder: (_) => const ClockScreen(),
+                      ),
+                      if (!kIsWeb)
+                        _Button(
+                          label: 'Gradients',
+                          builder: (_) => const GradientsScreen(),
+                        ),
+                      _Button(
+                        label: 'Spinner',
+                        builder: (_) => const SpinnerScreen(),
+                      ),
+                      _Button(
+                        label: 'Percentage',
+                        builder: (_) => const PercentageScreen(),
+                      ),
+                      _Button(
+                        label: 'Oval text',
+                        builder: (_) => const OvalTextScreen(),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -81,7 +90,7 @@ class _Button extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: RaisedButton(
         padding: const EdgeInsets.all(12.0),
         child: Text(

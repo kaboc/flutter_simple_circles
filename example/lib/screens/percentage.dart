@@ -12,7 +12,7 @@ class PercentageScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Loading indicator'),
+        title: const Text('Percentage indicator'),
       ),
       body: SafeArea(
         child: Center(
