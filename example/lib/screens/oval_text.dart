@@ -60,7 +60,6 @@ class _Oval extends StatelessWidget {
     return CircleStack(
       width: width,
       height: height,
-      overflow: Overflow.visible,
       children: <Widget>[
         const Circle(
           colors: [Color(0xFFD5EACA)],

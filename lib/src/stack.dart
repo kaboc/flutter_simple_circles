@@ -10,13 +10,12 @@ class CircleStack extends Stack {
     @required this.width,
     @required this.height,
     @required List<Widget> children,
-    Overflow overflow = Overflow.clip,
   })  : assert(width != null),
         assert(height != null),
         assert(children != null),
         super(
           key: key,
-          overflow: overflow,
+          overflow: Overflow.visible,
           fit: StackFit.loose,
           children: children
               .map((Widget child) => child is Circle

@@ -33,7 +33,6 @@ class _PieChart extends StatelessWidget {
     return CircleStack(
       width: radius,
       height: radius,
-      overflow: Overflow.visible,
       children: <Widget>[
         const CircleContainer(
           width: radius + 10.0,
