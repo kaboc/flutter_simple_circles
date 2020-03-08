@@ -44,27 +44,31 @@ class _Smiley extends StatelessWidget {
         ),
         // Left eye
         CircleContainer(
-          width: radius / 6,
-          height: radius / 6,
           degree: 310.0,
           distance: 47.0,
-          child: Circle(style: CircleStyle.fill()),
+          child: Circle(
+            width: radius / 6,
+            height: radius / 6,
+            style: CircleStyle.fill(),
+          ),
         ),
         // Right eye
         CircleContainer(
-          width: radius / 6,
-          height: radius / 6,
           degree: 50.0,
           distance: 47.0,
-          child: Circle(style: CircleStyle.fill()),
+          child: Circle(
+            width: radius / 6,
+            height: radius / 6,
+            style: CircleStyle.fill(),
+          ),
         ),
         // Mouth
         CircleContainer(
-          width: radius / 1.9,
-          height: radius / 2.2,
           degree: 180.0,
           distance: 10.0,
           child: Circle(
+            width: radius / 1.9,
+            height: radius / 2.2,
             style: CircleStyle.stroke(
               begin: 90.0,
               end: 270.0,

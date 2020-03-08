@@ -2,7 +2,6 @@ import 'dart:math';
 import 'package:flutter/widgets.dart';
 
 import 'cap.dart';
-import 'container.dart';
 import 'degree.dart';
 import 'enums.dart';
 import 'stack.dart';
@@ -36,13 +35,6 @@ class Circle extends StatelessWidget {
     double w = width;
     double h = height;
 
-    if (w == null || h == null) {
-      final CircleContainer container = CircleContainer.of(context);
-      if (container != null) {
-        w ??= container.width;
-        h ??= container.height;
-      }
-    }
     if (w == null || h == null) {
       final CircleStack stack = CircleStack.of(context);
       if (stack != null) {

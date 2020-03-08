@@ -35,11 +35,11 @@ class _PieChart extends StatelessWidget {
       height: radius,
       children: <Widget>[
         const CircleContainer(
-          width: radius + 10.0,
-          height: radius + 10.0,
           degree: 15 * 3.6,
           distance: 4.0,
           child: Circle(
+            width: radius + 10.0,
+            height: radius + 10.0,
             colors: [Colors.red],
             style: CircleStyle.fill(end: 30 * 3.6),
           ),
@@ -85,11 +85,8 @@ class _PieChart extends StatelessWidget {
 
   Widget _text(double percentage1, double percentage2, String text) {
     return CircleContainer(
-      width: 30.0,
-      height: 30.0,
       degree: (percentage1 + (percentage2 - percentage1) / 2) * 3.6,
       distance: 70.0,
-      align: Alignment.center,
       child: Text(
         text,
         style: const TextStyle(

@@ -69,7 +69,6 @@ class _PercentageIndicator extends StatelessWidget {
                   ),
                 ),
                 CircleContainer(
-                  align: Alignment.center,
                   child: Text(
                     percentage.toInt().toString(),
                     style: const TextStyle(

@@ -109,11 +109,8 @@ class _Clock extends StatelessWidget {
         // Numerals
         for (int i = 1; i <= 12; i++)
           CircleContainer(
-            width: 50.0,
-            height: 50.0,
             degree: i * 30.0,
             distance: 75.0,
-            align: Alignment.center,
             child: Text(
               i.toString(),
               style: const TextStyle(fontSize: 27.0, color: textColor),

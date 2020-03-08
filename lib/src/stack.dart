@@ -1,3 +1,4 @@
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 import 'circle.dart';
@@ -21,7 +22,7 @@ class CircleStack extends Stack {
               .map((Widget child) => child is Circle
                   ? _circle(width, height, child)
                   : (child is CircleContainer
-                      ? _container(width, height, child)
+                      ? _circleContainer(width, height, child)
                       : child))
               .toList()
                 ..insert(0, SizedBox(width: width, height: height)),
@@ -44,14 +45,11 @@ class CircleStack extends Stack {
           );
   }
 
-  static Widget _container(
-      double width, double height, CircleContainer container) {
-    if (container.width == width && container.height == height) {
-      return container.child;
-    }
-
-    final double childWidth = container.width ?? width;
-    final double childHeight = container.height ?? height;
+  static Widget _circleContainer(
+    double width,
+    double height,
+    CircleContainer container,
+  ) {
     final Offset offset = container.degree == null
         ? const Offset(0.0, 0.0)
         : _ovalOffsetAtDistance(
@@ -61,7 +59,7 @@ class CircleStack extends Stack {
             container.distance,
           );
 
-    final Widget rotatedChild = container.rotate == 0.0
+    final Widget rotatedContainer = container.rotate == 0.0
         ? container.child
         : Transform.rotate(
             angle: Degree(container.rotate).radian(),
@@ -69,15 +67,9 @@ class CircleStack extends Stack {
           );
 
     return Positioned(
-      left: offset.dx + width / 2 - childWidth / 2,
-      top: offset.dy + height / 2 - childHeight / 2,
-      child: SizedBox(
-        width: childWidth,
-        height: childHeight,
-        child: container.align == Alignment.topLeft
-            ? rotatedChild
-            : Align(alignment: container.align, child: rotatedChild),
-      ),
+      left: offset.dx + width / 2,
+      top: offset.dy + height / 2,
+      child: _CircleContainerAlign(child: rotatedContainer),
     );
   }
 
@@ -102,5 +94,55 @@ class CircleStack extends Stack {
       width * distance / 100 * wRatio,
       height * distance / 100 * hRatio,
     );
+  }
+}
+
+class _CircleContainerAlign extends SingleChildRenderObjectWidget {
+  const _CircleContainerAlign({Key key, @required Widget child})
+      : assert(child != null),
+        super(key: key, child: child);
+
+  @override
+  _RenderPositionedBox createRenderObject(BuildContext context) {
+    return _RenderPositionedBox();
+  }
+}
+
+class _RenderPositionedBox extends _RenderAligningShiftedBox {
+  Size _size;
+
+  @override
+  void performLayout() {
+    child.layout(constraints.loosen(), parentUsesSize: true);
+    if (child.size != _size) {
+      size = constraints.constrain(Size(child.size.width, child.size.height));
+      _size = child.size;
+      alignChild();
+    }
+  }
+
+  @override
+  void debugPaintSize(PaintingContext context, Offset offset) {
+    super.debugPaintSize(
+      context,
+      offset - Offset(child.size.width / 2, child.size.height / 2),
+    );
+  }
+}
+
+abstract class _RenderAligningShiftedBox extends RenderShiftedBox {
+  _RenderAligningShiftedBox() : super(null);
+
+  final Alignment _resolvedAlignment =
+      Alignment.center.resolve(TextDirection.ltr);
+
+  @protected
+  void alignChild() {
+    assert(!child.debugNeedsLayout);
+    assert(child.hasSize);
+    assert(hasSize);
+    final BoxParentData childParentData = child.parentData as BoxParentData;
+    childParentData.offset = _resolvedAlignment
+        .alongOffset(Offset(-child.size.width, -child.size.height));
   }
 }

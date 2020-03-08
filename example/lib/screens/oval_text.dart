@@ -95,19 +95,14 @@ class _Oval extends StatelessWidget {
           ),
         ),
         CircleContainer(
-          height: 40,
-          align: Alignment.center,
           child: Text(description),
         ),
         for (double d = 0.0; d < 360.0; d += 10.0)
           CircleContainer(
-            width: 30.0,
-            height: 30.0,
             degree: d,
             distance: 100.0,
             rotate:
                 verticalToArc ? Degree(d).forOvalArc(width, height).value : d,
-            align: Alignment.center,
             child: Text((d ~/ 10 % 10).toString()),
           ),
       ],
