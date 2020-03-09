@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'screens/clock.dart';
 import 'screens/gradients.dart';
-import 'screens/oval_text.dart';
+import 'screens/oval_layout.dart';
 import 'screens/percentage.dart';
 import 'screens/pie_chart.dart';
 import 'screens/smiley.dart';
@@ -66,8 +66,8 @@ class App extends StatelessWidget {
                         builder: (_) => const PercentageScreen(),
                       ),
                       _Button(
-                        label: 'Oval text',
-                        builder: (_) => const OvalTextScreen(),
+                        label: 'Oval layout',
+                        builder: (_) => const OvalLayoutScreen(),
                       ),
                     ],
                   ),

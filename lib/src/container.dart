@@ -15,13 +15,12 @@ class CircleContainer extends ParentDataWidget<CircleStack> {
         assert(rotate != null),
         super(key: key, child: child);
 
-  final double distance;
   final double degree;
+  final double distance;
   final double rotate;
 
   @override
   void applyParentData(RenderObject renderObject) {
     assert(renderObject.parentData is StackParentData);
   }
-
 }

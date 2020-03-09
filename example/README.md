@@ -17,28 +17,32 @@ CircleStack(
     ),
     // Left eye
     CircleContainer(
-      width: 46.0,
-      height: 46.0,
       degree: 310.0,
       distance: 47.0,
-      child: Circle(style: CircleStyle.fill()),
+      child: Circle(
+        width: 46.0,
+        height: 46.0,
+        style: CircleStyle.fill(),
+      ),
     ),
     // Right eye
     CircleContainer(
-      width: 46.0,
-      height: 46.0,
       degree: 50.0,
       distance: 47.0,
-      child: Circle(style: CircleStyle.fill()),
+      child: Circle(
+        width: 46.0,
+        height: 46.0,
+        style: CircleStyle.fill(),
+      ),
     ),
     // Mouth
     CircleContainer(
-      width: 142.0,
-      height: 124.0,
       degree: 180.0,
       distance: 10.0,
       child: Circle(
         style: CircleStyle.stroke(
+          width: 142.0,
+          height: 124.0,
           begin: 90.0,
           end: 270.0,
           strokeWidth: 22.5,
@@ -56,7 +60,7 @@ Just run `main.dart` in the [lib](lib) directory, or see the [Demo](https://kabo
 
 - [Pie chart](lib/screens/pie_chart.dart)
 - [Clock](lib/screens/clock.dart)
-- [Gradients](lib/screens/gradients.dart)
+- [Gradients](lib/screens/gradients.dart) (not included in web demo)
 - [Spinner](lib/screens/spinner.dart)
 - [Percentage](lib/screens/percentage.dart)
-- [Oval text](lib/screens/oval_text.dart) 
+- [Oval layout](lib/screens/oval_layout.dart) 

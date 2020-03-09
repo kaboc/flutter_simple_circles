@@ -1,4 +1,4 @@
-# simple_circles
+# Simple Circles
 
 A Flutter package for drawing simple circles.
 

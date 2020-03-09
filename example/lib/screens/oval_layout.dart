@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 import 'package:simple_circles/simple_circles.dart';
 
-class OvalTextScreen extends StatelessWidget {
-  const OvalTextScreen();
+class OvalLayoutScreen extends StatelessWidget {
+  const OvalLayoutScreen();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Oval text'),
+        title: const Text('Oval layout'),
       ),
       body: SafeArea(
         child: Center(

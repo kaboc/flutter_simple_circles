@@ -59,7 +59,7 @@ class CircleStack extends Stack {
             container.distance,
           );
 
-    final Widget rotatedContainer = container.rotate == 0.0
+    final Widget rotatedChild = container.rotate == 0.0
         ? container.child
         : Transform.rotate(
             angle: Degree(container.rotate).radian(),
@@ -69,7 +69,7 @@ class CircleStack extends Stack {
     return Positioned(
       left: offset.dx + width / 2,
       top: offset.dy + height / 2,
-      child: _CircleContainerAlign(child: rotatedContainer),
+      child: _CircleContainerAlign(child: rotatedChild),
     );
   }
 
