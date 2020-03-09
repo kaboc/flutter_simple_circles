@@ -109,16 +109,11 @@ class _CircleContainerAlign extends SingleChildRenderObjectWidget {
 }
 
 class _RenderPositionedBox extends _RenderAligningShiftedBox {
-  Size _size;
-
   @override
   void performLayout() {
     child.layout(constraints.loosen(), parentUsesSize: true);
-    if (child.size != _size) {
-      size = constraints.constrain(Size(child.size.width, child.size.height));
-      _size = child.size;
-      alignChild();
-    }
+    size = constraints.constrain(Size(child.size.width, child.size.height));
+    alignChild();
   }
 
   @override
