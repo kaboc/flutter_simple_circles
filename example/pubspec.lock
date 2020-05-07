@@ -7,7 +7,7 @@ packages:
       name: collection
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.14.11"
+    version: "1.14.12"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -19,7 +19,7 @@ packages:
       name: flutter_gradients
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0+1"
+    version: "1.0.0+2"
   meta:
     dependency: transitive
     description:
@@ -55,3 +55,4 @@ packages:
     version: "2.0.8"
 sdks:
   dart: ">=2.6.0 <3.0.0"
+  flutter: ">=1.17.0"
