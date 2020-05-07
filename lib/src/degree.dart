@@ -1,6 +1,8 @@
 import 'dart:math';
 import 'dart:ui';
+import 'package:meta/meta.dart';
 
+@immutable
 class Degree {
   const Degree(this.value) : assert(value != null);
 
