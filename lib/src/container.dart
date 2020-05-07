@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 
 import 'stack.dart';
 
-class CircleContainer extends ParentDataWidget<CircleStack> {
+class CircleContainer extends ParentDataWidget<StackParentData> {
   const CircleContainer({
     Key key,
     @required Widget child,
@@ -23,4 +23,7 @@ class CircleContainer extends ParentDataWidget<CircleStack> {
   void applyParentData(RenderObject renderObject) {
     assert(renderObject.parentData is StackParentData);
   }
+
+  @override
+  Type get debugTypicalAncestorWidgetClass => CircleStack;
 }
