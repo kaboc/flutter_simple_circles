@@ -1,5 +1,7 @@
 # Simple Circles
 
+[![Demo](https://img.shields.io/badge/Demo-Simple%20Circles-FFC107)](https://kaboc.github.io/flutter_simple_circles/)
+
 A Flutter package for drawing simple circles.
 
 ## Demo

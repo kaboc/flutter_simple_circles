@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'dart:ui';
+import 'dart:ui' show Offset;
 import 'package:meta/meta.dart';
 
 @immutable

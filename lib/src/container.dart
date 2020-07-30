@@ -1,4 +1,4 @@
-import 'package:flutter/rendering.dart';
+import 'package:flutter/rendering.dart' show StackParentData;
 import 'package:flutter/widgets.dart';
 
 import 'stack.dart';
