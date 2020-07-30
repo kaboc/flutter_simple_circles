@@ -50,7 +50,7 @@ class CircleStack extends Stack {
     double height,
     CircleContainer container,
   ) {
-    final Offset offset = container.degree == null
+    final offset = container.degree == null
         ? const Offset(0.0, 0.0)
         : _ovalOffsetAtDistance(
             width,
@@ -59,7 +59,7 @@ class CircleStack extends Stack {
             container.distance,
           );
 
-    final Widget rotatedChild = container.rotate == 0.0
+    final rotatedChild = container.rotate == 0.0
         ? container.child
         : Transform.rotate(
             angle: Degree(container.rotate).radian(),
@@ -79,8 +79,8 @@ class CircleStack extends Stack {
     double degree,
     double distance,
   ) {
-    double wRatio = 1.0;
-    double hRatio = 1.0;
+    var wRatio = 1.0;
+    var hRatio = 1.0;
 
     if (width > height) {
       wRatio = (width - (height - height * distance / 100)) /
@@ -136,7 +136,7 @@ abstract class _RenderAligningShiftedBox extends RenderShiftedBox {
     assert(!child.debugNeedsLayout);
     assert(child.hasSize);
     assert(hasSize);
-    final BoxParentData childParentData = child.parentData as BoxParentData;
+    final childParentData = child.parentData as BoxParentData;
     childParentData.offset = _resolvedAlignment
         .alongOffset(Offset(-child.size.width, -child.size.height));
   }

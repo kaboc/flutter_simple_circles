@@ -59,11 +59,11 @@ class _Sweep extends _Gradient {
     double begin,
     double end,
   ) {
-    final double b = begin;
-    final double e = end;
+    final b = begin;
+    final e = end;
 
-    final Degree smaller = Degree(min(b, e));
-    final Degree larger = Degree(max(b, e));
+    final smaller = Degree(min(b, e));
+    final larger = Degree(max(b, e));
 
     _gradient = SweepGradient(
       colors: e < b ? colors.reversed.toList() : colors,
@@ -90,13 +90,13 @@ class _Line extends _Gradient {
     double begin,
     double end,
   ) {
-    final double baseDistance = width / 2 * end / 100 - width / 2 * begin / 100;
-    final Offset offset1 = degree.offsetAtDistance(width, height, begin);
-    final Offset offset2 = degree.offsetAtDistance(width, height, end);
-    final double distance = sqrt(
+    final baseDistance = width / 2 * end / 100 - width / 2 * begin / 100;
+    final offset1 = degree.offsetAtDistance(width, height, begin);
+    final offset2 = degree.offsetAtDistance(width, height, end);
+    final distance = sqrt(
       pow(offset2.dx - offset1.dx, 2) + pow(offset2.dy - offset1.dy, 2),
     );
-    final double ratio = distance / baseDistance;
+    final ratio = distance / baseDistance;
 
     _gradient = LinearGradient(
       colors: colors,
@@ -125,9 +125,9 @@ class _Linear extends _Gradient {
   ) {
     degree += const Degree(180.0);
 
-    final Offset offset = degree.offsetOnArc(width, height);
-    final double distance = sqrt(pow(offset.dx, 2) + pow(offset.dy, 2));
-    final double ratio = distance / (width / 2);
+    final offset = degree.offsetOnArc(width, height);
+    final distance = sqrt(pow(offset.dx, 2) + pow(offset.dy, 2));
+    final ratio = distance / (width / 2);
 
     _gradient = LinearGradient(
       colors: colors,

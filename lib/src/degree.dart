@@ -75,7 +75,7 @@ class Degree {
     double height, [
     Offset center = const Offset(0.0, 0.0),
   ]) {
-    final double rad = tiltedRadian();
+    final rad = tiltedRadian();
     return Offset(
       center.dx + width / 2 * cos(rad),
       center.dy + height / 2 * sin(rad),
@@ -96,7 +96,7 @@ class Degree {
   }
 
   double distance(double width, double height) {
-    final Offset offset = offsetOnArc(width, height);
+    final offset = offsetOnArc(width, height);
     return sqrt(pow(offset.dx, 2) + pow(offset.dy, 2));
   }
 
@@ -105,14 +105,14 @@ class Degree {
   }
 
   Degree forOval(double width, double height) {
-    final Offset offset1 = offsetAtDistance(width, height, 0.0);
-    final Offset offset2 = offsetAtDistance(width, height, 100.0);
+    final offset1 = offsetAtDistance(width, height, 0.0);
+    final offset2 = offsetAtDistance(width, height, 100.0);
     return fromOffsets(offset1, offset2);
   }
 
   Degree forOvalArc(double width, double height) {
-    final Offset offset1 = offsetOnArc(width, height);
-    final Offset offset2 = Degree(value + 0.01).offsetOnArc(width, height);
+    final offset1 = offsetOnArc(width, height);
+    final offset2 = Degree(value + 0.01).offsetOnArc(width, height);
     return fromOffsets(offset1, offset2) - 90.0;
   }
 
@@ -125,7 +125,7 @@ class Degree {
   }
 
   static Degree fromOffsets(Offset offset1, Offset offset2) {
-    final double rad = atan2(offset2.dy - offset1.dy, offset2.dx - offset1.dx);
+    final rad = atan2(offset2.dy - offset1.dy, offset2.dx - offset1.dx);
     return fromRadian(rad) + 90.0;
   }
 

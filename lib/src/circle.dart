@@ -32,11 +32,11 @@ class Circle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double w = width;
-    double h = height;
+    var w = width;
+    var h = height;
 
     if (w == null || h == null) {
-      final CircleStack stack = CircleStack.of(context);
+      final stack = CircleStack.of(context);
       if (stack != null) {
         w ??= stack.width;
         h ??= stack.height;
@@ -172,14 +172,14 @@ class _Painter extends CustomPainter {
       return;
     }
 
-    final double capInset = Degree.fromLength(width, height, strokeWidth).value;
+    final capInset = Degree.fromLength(width, height, strokeWidth).value;
 
-    bool bRounded = round == RoundCap.begin || round == RoundCap.both;
-    final bool eRounded = round == RoundCap.end || round == RoundCap.both;
+    var bRounded = round == RoundCap.begin || round == RoundCap.both;
+    final eRounded = round == RoundCap.end || round == RoundCap.both;
 
-    final bool isClockwise = begin <= end;
-    double b = bRounded ? begin + (isClockwise ? capInset : -capInset) : begin;
-    double e = eRounded ? end - (isClockwise ? capInset : -capInset) : end;
+    final isClockwise = begin <= end;
+    var b = bRounded ? begin + (isClockwise ? capInset : -capInset) : begin;
+    var e = eRounded ? end - (isClockwise ? capInset : -capInset) : end;
 
     if ((isClockwise && b > e) || (!isClockwise && b < e)) {
       if (bRounded && eRounded) {
@@ -192,19 +192,19 @@ class _Painter extends CustomPainter {
       }
     }
 
-    final Offset center = Offset(width / 2, height / 2);
-    final Rect rect = Rect.fromLTWH(0.0, 0.0, width, height);
+    final center = Offset(width / 2, height / 2);
+    final rect = Rect.fromLTWH(0.0, 0.0, width, height);
 
-    final Path path = Path();
+    final path = Path();
 
     if (bRounded && eRounded) {
-      final Offset bOffset = Degree(b).offsetOnArc(width, height, center);
+      final bOffset = Degree(b).offsetOnArc(width, height, center);
       path
         ..moveTo(bOffset.dx, bOffset.dy)
         ..arcTo(rect, Degree(b).tiltedRadian(), Degree(e - b).radian(), true);
     } else if (bRounded) {
-      final double eAdj = e - (isClockwise ? 0.1 : -0.1);
-      final Offset eAdjOffset = Degree(eAdj).offsetOnArc(width, height, center);
+      final eAdj = e - (isClockwise ? 0.1 : -0.1);
+      final eAdjOffset = Degree(eAdj).offsetOnArc(width, height, center);
       b = b == e ? eAdj : b;
       path
         ..moveTo(eAdjOffset.dx, eAdjOffset.dy)
@@ -212,8 +212,8 @@ class _Painter extends CustomPainter {
             rect, Degree(eAdj).tiltedRadian(), Degree(e - eAdj).radian(), true)
         ..arcTo(rect, Degree(e).tiltedRadian(), Degree(b - e).radian(), false);
     } else {
-      final double bAdj = b + (isClockwise ? 0.1 : -0.1);
-      final Offset bAdjOffset = Degree(bAdj).offsetOnArc(width, height, center);
+      final bAdj = b + (isClockwise ? 0.1 : -0.1);
+      final bAdjOffset = Degree(bAdj).offsetOnArc(width, height, center);
       e = b == e ? bAdj : e;
       path
         ..moveTo(bAdjOffset.dx, bAdjOffset.dy)
@@ -226,12 +226,12 @@ class _Painter extends CustomPainter {
   }
 
   void _drawDash(Canvas canvas, double width, double height) {
-    final Offset center = Offset(width / 2, height / 2);
+    final center = Offset(width / 2, height / 2);
 
-    final Path path = Path();
-    for (double d = begin; d < end; d += step) {
-      final Offset from = Degree(d).offsetOnArc(width, height, center);
-      final Offset to = Degree(d + length).offsetOnArc(width, height, center);
+    final path = Path();
+    for (var d = begin; d < end; d += step) {
+      final from = Degree(d).offsetOnArc(width, height, center);
+      final to = Degree(d + length).offsetOnArc(width, height, center);
       path
         ..moveTo(from.dx, from.dy)
         ..arcToPoint(to);
@@ -240,18 +240,18 @@ class _Painter extends CustomPainter {
   }
 
   void _drawDots(Canvas canvas, double width, double height) {
-    final Offset center = Offset(width / 2, height / 2);
+    final center = Offset(width / 2, height / 2);
 
-    double b = begin;
-    double e = end;
+    var b = begin;
+    var e = end;
     if (begin > end) {
       b = end;
       e = begin;
     }
 
-    final Path path = Path();
-    for (double d = b; d < e; d += step) {
-      final Offset offset = Degree(d).offsetOnArc(width, height, center);
+    final path = Path();
+    for (var d = b; d < e; d += step) {
+      final offset = Degree(d).offsetOnArc(width, height, center);
       path
         ..moveTo(offset.dx, offset.dy)
         ..addOval(Rect.fromCircle(
@@ -270,7 +270,7 @@ class _Painter extends CustomPainter {
     double begin,
     double end,
   ) {
-    final Offset center = Offset(width / 2, height / 2);
+    final center = Offset(width / 2, height / 2);
 
     canvas.drawLine(
       degree.offsetAtDistance(width, height, begin, center),
@@ -280,15 +280,15 @@ class _Painter extends CustomPainter {
   }
 
   void _drawLineWithRoundEnds(Canvas canvas, double width, double height) {
-    final double distance = degree.distance(width, height);
-    final double capInset = strokeWidth / 2 / distance * 100;
+    final distance = degree.distance(width, height);
+    final capInset = strokeWidth / 2 / distance * 100;
 
-    bool bRounded = round == RoundCap.begin || round == RoundCap.both;
-    final bool eRounded = round == RoundCap.end || round == RoundCap.both;
+    var bRounded = round == RoundCap.begin || round == RoundCap.both;
+    final eRounded = round == RoundCap.end || round == RoundCap.both;
 
-    final bool isOutward = begin < end;
-    double b = bRounded ? begin + (isOutward ? capInset : -capInset) : begin;
-    double e = eRounded ? end - (isOutward ? capInset : -capInset) : end;
+    final isOutward = begin < end;
+    var b = bRounded ? begin + (isOutward ? capInset : -capInset) : begin;
+    var e = eRounded ? end - (isOutward ? capInset : -capInset) : end;
 
     if ((isOutward && b > e) || (!isOutward && b < e)) {
       if (bRounded && eRounded) {
@@ -301,22 +301,22 @@ class _Painter extends CustomPainter {
       }
     }
 
-    final Offset center = Offset(width / 2, height / 2);
-    Offset bOffset = degree.offsetAtDistance(width, height, b, center);
-    Offset eOffset = degree.offsetAtDistance(width, height, e, center);
+    final center = Offset(width / 2, height / 2);
+    var bOffset = degree.offsetAtDistance(width, height, b, center);
+    var eOffset = degree.offsetAtDistance(width, height, e, center);
 
-    final Path path = Path();
+    final path = Path();
 
     if (bRounded && eRounded) {
       path
         ..moveTo(bOffset.dx, bOffset.dy)
         ..lineTo(eOffset.dx, eOffset.dy);
     } else {
-      final double distance = degree.distance(width, height);
-      final double adjDistance = (isOutward ? 2 : -2) / distance;
+      final distance = degree.distance(width, height);
+      final adjDistance = (isOutward ? 2 : -2) / distance;
 
       if (bRounded) {
-        final Offset eAdjOffset =
+        final eAdjOffset =
             degree.offsetAtDistance(width, height, e - adjDistance, center);
         bOffset = b == e ? eAdjOffset : bOffset;
         path
@@ -324,7 +324,7 @@ class _Painter extends CustomPainter {
           ..lineTo(eOffset.dx, eOffset.dy)
           ..lineTo(bOffset.dx, bOffset.dy);
       } else {
-        final Offset bAdjOffset =
+        final bAdjOffset =
             degree.offsetAtDistance(width, height, b + adjDistance, center);
         eOffset = b == e ? bAdjOffset : eOffset;
         path
@@ -338,13 +338,12 @@ class _Painter extends CustomPainter {
   }
 
   void _drawDashedLine(Canvas canvas, double width, double height) {
-    final Offset center = Offset(width / 2, height / 2);
+    final center = Offset(width / 2, height / 2);
 
-    final Path path = Path();
-    for (double i = begin; i < end; i += step) {
-      final Offset from = degree.offsetAtDistance(width, height, i, center);
-      final Offset to =
-          degree.offsetAtDistance(width, height, i + length, center);
+    final path = Path();
+    for (var i = begin; i < end; i += step) {
+      final from = degree.offsetAtDistance(width, height, i, center);
+      final to = degree.offsetAtDistance(width, height, i + length, center);
       path
         ..moveTo(from.dx, from.dy)
         ..lineTo(to.dx, to.dy);
@@ -353,18 +352,18 @@ class _Painter extends CustomPainter {
   }
 
   void _drawDottedLine(Canvas canvas, double width, double height) {
-    final Offset center = Offset(width / 2, height / 2);
+    final center = Offset(width / 2, height / 2);
 
-    double b = begin;
-    double e = end;
+    var b = begin;
+    var e = end;
     if (begin > end) {
       b = end;
       e = begin;
     }
 
-    final Path path = Path();
-    for (double i = b; i < e; i += step) {
-      final Offset offset =
+    final path = Path();
+    for (var i = b; i < e; i += step) {
+      final offset =
           degree.offsetOnArc(width * i / 100, height * i / 100, center);
       path
         ..moveTo(offset.dx, offset.dy)
@@ -383,7 +382,7 @@ class _Painter extends CustomPainter {
       return;
     }
 
-    final Rect rect = Rect.fromLTWH(0, 0, width, height);
+    final rect = Rect.fromLTWH(0, 0, width, height);
 
     switch (shader._type) {
       case CircleShaderType.customGradient:
@@ -414,7 +413,7 @@ class _Painter extends CustomPainter {
                   colors, shader._stops, width, height, degree, begin, end)
               .createShader(rect);
         } else {
-          final double d = shader._degree ?? 0.0;
+          final d = shader._degree ?? 0.0;
           _circlePaint.shader =
               _Gradient.linear(colors, shader._stops, width, height, Degree(d))
                   .createShader(rect);

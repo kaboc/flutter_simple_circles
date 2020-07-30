@@ -3,8 +3,8 @@ analyzer:
     implicit-casts: false
     implicit-dynamic: false
   errors:
-    missing_required_param: warning
-    missing_return: warning
+    missing_required_param: error
+    missing_return: error
     todo: ignore
     sdk_version_async_exported_from_core: ignore
 
@@ -13,7 +13,6 @@ linter:
     - always_declare_return_types
     - always_put_control_body_on_new_line
     - always_require_non_null_named_parameters
-    - always_specify_types
     - annotate_overrides
     - avoid_bool_literals_in_conditional_expressions
     - avoid_classes_with_only_static_members
@@ -51,6 +50,7 @@ linter:
     - no_adjacent_strings_in_list
     - no_duplicate_case_values
     - non_constant_identifier_names
+    - omit_local_variable_types
     - overridden_fields
     - package_api_docs
     - package_names
