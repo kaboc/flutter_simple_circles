@@ -23,7 +23,7 @@ class PercentageScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.refresh),
+        child: const Icon(Icons.refresh),
         onPressed: () {
           _percentage.value = _percentage.value == 0.0 ? 100.0 : 0.0;
         },
