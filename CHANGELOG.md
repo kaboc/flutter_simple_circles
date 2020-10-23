@@ -1,3 +1,8 @@
+## 0.1.2 - 23 October 2020
+
+* Change minimum SDK version to 2.9.0 to be compatible with the latest Flutter version.
+* Update analysis_options.yaml, etc.
+
 ## 0.1.1 - 7 May 2020
 
 * Minor changes
